@@ -1,4 +1,4 @@
-package com.test.bean;
+package com.exampleQiu.bean;
 
 /**
  * @Classname Message

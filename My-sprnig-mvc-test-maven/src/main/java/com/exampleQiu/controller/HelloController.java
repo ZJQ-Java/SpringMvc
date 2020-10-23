@@ -1,4 +1,4 @@
-package com.test1;
+package com.exampleQiu.controller;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;

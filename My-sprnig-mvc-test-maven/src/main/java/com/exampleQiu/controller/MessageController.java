@@ -1,7 +1,7 @@
-package com.test.controller;
+package com.exampleQiu.controller;
 
-import com.test.bean.Message;
-import com.test.service.MessageService;
+import com.exampleQiu.service.MessageService;
+import com.exampleQiu.bean.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;

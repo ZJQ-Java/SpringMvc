@@ -1,4 +1,4 @@
-package com.test1;
+package com.exampleQiu.bean;
 
 /**
  * @Classname User

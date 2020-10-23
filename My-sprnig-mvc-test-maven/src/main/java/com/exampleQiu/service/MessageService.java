@@ -1,6 +1,6 @@
-package com.test.service;
+package com.exampleQiu.service;
 
-import com.test.bean.Message;
+import com.exampleQiu.bean.Message;
 
 import java.util.Map;
 

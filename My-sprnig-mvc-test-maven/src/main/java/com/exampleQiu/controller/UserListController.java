@@ -1,6 +1,7 @@
-package com.test1;
+package com.exampleQiu.controller;
 
-import com.test.bean.Message;
+import com.exampleQiu.bean.Message;
+import com.exampleQiu.bean.User;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
