@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="My-sprnig-mvc-test:war">
-    <output-path>$PROJECT_DIR$/out/artifacts/My_sprnig_mvc_test_war</output-path>
-    <root id="archive" name="My-sprnig-mvc-test_war.war">
-      <element id="artifact" artifact-name="My-sprnig-mvc-test:war exploded" />
-      <element id="dir-copy" path="$PROJECT_DIR$/web/resourses" />
-    </root>
-  </artifact>
-</component>
