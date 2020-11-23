@@ -6,5 +6,5 @@
 
     <import resource="spring.xml"/>
     <import resource="spring-mvc.xml"/>
-<!--    <import resource="applicationContext.xml"/>-->
+    <import resource="spring-server.xml"/>
 </beans>

@@ -16,21 +16,6 @@
     <context:component-scan base-package="com.qiu.controller"/>
     <!-- 让Spring MVC不处理静态资源 -->
     <mvc:default-servlet-handler />
-<!--    jackson乱码解决-->
-<!--    <mvc:annotation-driven>-->
-<!--        <mvc:message-converters register-defaults="true">-->
-<!--            <bean class="org.springframework.http.converter.StringHttpMessageConverter">-->
-<!--                <constructor-arg value="UTF-8"/>-->
-<!--            </bean>-->
-<!--            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">-->
-<!--                <property name="objectMapper">-->
-<!--                    <bean class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">-->
-<!--                        <property name="failOnEmptyBeans" value="false"/>-->
-<!--                    </bean>-->
-<!--                </property>-->
-<!--            </bean>-->
-<!--        </mvc:message-converters>-->
-<!--    </mvc:annotation-driven>-->
     <!--
     支持mvc注解驱动
         在spring中一般采用@RequestMapping注解来完成映射关系
