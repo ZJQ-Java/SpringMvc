@@ -20,7 +20,7 @@ public class BookController {
     @Autowired
     BookServer bookServer;
 
-    @RequestMapping(value = "book/gets",produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "book/gets")
     @ResponseBody
     public String getBooks() {
         List<Book> allBooks = bookServer.getAllBooks();
