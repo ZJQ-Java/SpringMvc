@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface BookServer {
     public List<Book> getAllBooks();
+
+    void testTransaction(Book book);
 }

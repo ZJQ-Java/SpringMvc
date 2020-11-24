@@ -7,7 +7,7 @@ import lombok.ToString;
 @ToString
 public class Book {
 
-    private int    bookID;
+    private int    id;
     private String bookName;
     private int    bookCounts;
     private String detail;

@@ -38,6 +38,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
         <property name="mapperLocations" value="classpath:com/qiu/dao/mapper/xml/*.xml"/>
         <!--        指定mybatsi-xml 主要配置setting typeAliases-->
 <!--        <property name="configLocation" value="mybatis-config.xml"/>-->
+        <property name="typeAliasesPackage" value="com.qiu.dao.pojo"/>
     </bean>
 
     <!-- 4.配置扫描Dao接口包，动态实现Dao接口注入到spring容器中 -->

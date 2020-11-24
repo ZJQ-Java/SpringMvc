@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qiu.dao.mapper.BookMapper">
-    <select id="getAllBooks" resultType="com.qiu.dao.pojo.Book">
+    <resultMap id="bookResultMap" type="Book">
+        <result column="id" property="id"/>
+        <result column="book_name" property="bookName"/>
+        <result column="book_counts" property="bookCounts"/>
+        <result column="detail" property="detail"/>
+
+    </resultMap>
+    <select id="getAllBooks" resultMap="bookResultMap">
         select * from book
     </select>
+    <insert id="addBooks" parameterType="Book">
+        insert into book(book_name,book_counts,detail) values (#{bookName},#{bookCounts},#{detail})
+    </insert>
+
+    <delete id="delBooks" parameterType="_int">
+        deletes from book where id=#{id}
+    </delete>
 </mapper>

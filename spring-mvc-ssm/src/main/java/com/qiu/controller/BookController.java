@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -34,6 +33,14 @@ public class BookController {
         List<Book> allBooks = bookServer.getAllBooks();
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(allBooks);
+    }
+
+    @GetMapping("book/test")
+    @ResponseBody
+    public String testTransaction(Book book) throws JsonProcessingException {
+        System.out.println(book);
+        bookServer.testTransaction(book);
+        return "success";
     }
 
 }
