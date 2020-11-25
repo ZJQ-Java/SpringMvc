@@ -14,6 +14,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="spring-mvc-interpretion" target="1.8" />
       <module name="springmvc-demo02" target="1.5" />
     </bytecodeTargetLevel>
   </component>
