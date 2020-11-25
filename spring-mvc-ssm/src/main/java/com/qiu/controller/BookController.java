@@ -7,6 +7,7 @@ import com.qiu.dao.pojo.Book;
 import com.qiu.server.BookServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,10 +22,11 @@ public class BookController {
 
     @RequestMapping(value = "book/gets")
     @ResponseBody
-    public String getBooks() {
+    public String getBooks(Model model) {
         List<Book> allBooks = bookServer.getAllBooks();
-        System.out.println(allBooks);
-        return JSON.toJSONString(bookServer.getAllBooks());
+        /*model.addAttribute("allBooks",allBooks);
+        return "allBooks";*/
+        return JSON.toJSONString(allBooks);
     }
 
     @GetMapping("book/gets1")
