@@ -17,5 +17,5 @@
         <property name="suffix" value=".jsp"/>
     </bean>
     <!--    将自己的类交给SpringIOC容器，注册bean-->
-    <bean id="/hello" class="com.qiu.controller.HelloController"/>
+    <bean id="/hello" class="com.HelloController"/>
 </beans>

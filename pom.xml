@@ -16,6 +16,7 @@
         <module>spring-mvc-demo03</module>
         <module>spring-mvc-json04</module>
         <module>spring-mvc-ssm</module>
+        <module>spring-mvc-interceptor</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

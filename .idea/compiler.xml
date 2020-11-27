@@ -6,11 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="servlet-demo01" />
         <module name="spring-mvc-demo03" />
-        <module name="spring-mvc-json04" />
-        <module name="spring-mvc-ssm" />
         <module name="spring-mvc-demo02" />
+        <module name="servlet-demo01" />
+        <module name="spring-mvc-ssm" />
+        <module name="spring-mvc-interceptor" />
+        <module name="spring-mvc-json04" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
