@@ -26,8 +26,14 @@
     <mvc:annotation-driven/>
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/**"/>
+<!--            /**的意思是所有文件夹及里面的子文件夹-->
+<!--            /*是所有文件夹，不含子文件夹-->
+            <mvc:mapping path="/user/**"/>
             <bean  class="com.qiu.interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/hello/**"/>
+            <bean  class="com.qiu.interceptor.AnnotationInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
     <!-- 视图解析器 -->
