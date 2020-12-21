@@ -55,17 +55,20 @@ public class ExportUtil {
                     for (int j = 0; j < mapKeyArr.length; j++) {
                         Map<Integer, Book> integerBookMap = dataList.get(i);
                         Book book = integerBookMap.get(Integer.parseInt(mapKeyArr[j]));
-                        buf.append(book.getId()).append(CSV_COLUMN_SEPARATOR)
+                        buf.append("i" + i + "j" + j).append(CSV_COLUMN_SEPARATOR)
                                 .append(book.getBookName()).append(CSV_COLUMN_SEPARATOR)
                                 .append(book.getBookCounts()).append(CSV_COLUMN_SEPARATOR)
                                 .append(book.getDetail());
                         buf.append(CSV_RN);
+
                     }
                 }
+                os.write(buf.toString().getBytes("GBK"));
+                os.flush();
+                buf = new StringBuffer();
             }
             // 写出响应
-            os.write(buf.toString().getBytes("GBK"));
-            os.flush();
+
             return true;
         } catch (Exception e) {
 //            logger.error("doExport错误...", e);
