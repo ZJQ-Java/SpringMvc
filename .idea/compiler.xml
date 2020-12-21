@@ -14,9 +14,14 @@
         <module name="spring-mvc-json04" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="spring-mvc-interpretion" target="1.8" />
-      <module name="springmvc-demo02" target="1.5" />
+    <bytecodeTargetLevel target="8">
+      <module name="servlet-demo01" target="1.8" />
+      <module name="spring-mvc-demo02" target="1.8" />
+      <module name="spring-mvc-demo03" target="1.8" />
+      <module name="spring-mvc-interceptor" target="1.8" />
+      <module name="spring-mvc-json04" target="1.8" />
+      <module name="spring-mvc-ssm" target="1.8" />
+      <module name="SpringMVC" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
