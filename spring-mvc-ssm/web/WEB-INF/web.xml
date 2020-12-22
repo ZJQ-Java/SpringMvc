@@ -17,6 +17,11 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 
+    <context-param>
+        <param-name>log4jConfiguration</param-name>
+        <param-value>classpath:log4j2.xml</param-value>
+    </context-param>
+
     <!--所有请求都会被springmvc拦截 -->
     <servlet-mapping>
         <servlet-name>DispatcherServlet</servlet-name>

@@ -1,26 +1,26 @@
-### ÉèÖÃ     =ºÅºóÃæÏàµ±ÓÚjava±äÁ¿ ÏÂ±ßµ÷ÓÃ###
+### è®¾ç½®     =å·åé¢ç›¸å½“äºjavaå˜é‡ ä¸‹è¾¹è°ƒç”¨###
 log4j.rootLogger = debug,conlose,B
 
-### mainÉèÖÃÈÕÖ¾·¢ËÍµ½¿ØÖÆÌ§
+### mainè®¾ç½®æ—¥å¿—å‘é€åˆ°æ§åˆ¶æŠ¬
 log4j.appender.conlose= org.apache.log4j.ConsoleAppender
 log4j.appender.conlose.Target = System.out
 log4j.appender.conlose.layout = org.apache.log4j.PatternLayout
 log4j.appender.conlose.layout.ConversionPattern = [%-5p] %d{yyyy-MM-dd HH:mm:ss,SSS} method:%l%n%m%n
 
-### Êä³öDEBUG ¼¶±ğÒÔÉÏµÄÈÕÖ¾µ½=E://logs/error.log
+### è¾“å‡ºDEBUG çº§åˆ«ä»¥ä¸Šçš„æ—¥å¿—åˆ°=E://logs/error.log
 log4j.appender.B = org.apache.log4j.DailyRollingFileAppender
 log4j.appender.B.File = //logs/log.log
-###Êä³öÊÇ·ñ¸²¸Ç   ture Îª²»¸²¸Ç
+###è¾“å‡ºæ˜¯å¦è¦†ç›–   ture ä¸ºä¸è¦†ç›–
 log4j.appender.B.Append = true
 log4j.appender.B.Threshold = DEBUG
 log4j.appender.B.layout = org.apache.log4j.PatternLayout
 log4j.appender.B.layout.ConversionPattern = %-d{yyyy-MM-dd HH:mm:ss}  [ %t:%r ] - [ %p ]  %m%n
 
-###  File ÉèÖÃÈÕÖ¾Êä³öµ½Ö¸¶¨´óĞ¡µÄÎÄ¼ş
+###  File è®¾ç½®æ—¥å¿—è¾“å‡ºåˆ°æŒ‡å®šå¤§å°çš„æ–‡ä»¶
 log4j.appender.file=org.apache.log4j.RollingFileAppender
 log4j.appender.file.Threshold=DEBUG
-log4j.appender.file.File=//logs/log.log     //Â·¾¶
-log4j.appender.file.MaxFileSize=5120KB     //´óĞ¡
+log4j.appender.file.File=//logs/log.log     //è·¯å¾„
+log4j.appender.file.MaxFileSize=5120KB     //å¤§å°
 log4j.appender.file.MaxBackupIndex=10
 log4j.appender.file.layout=org.apache.log4j.PatternLayout
 log4j.appender.file.layout.ConversionPattern=%-d{yyyy-MM-dd HH:mm:ss}  [ %t:%r ] - [ %p ]  %m%n
