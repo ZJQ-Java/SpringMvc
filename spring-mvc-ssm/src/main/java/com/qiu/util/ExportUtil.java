@@ -2,6 +2,8 @@ package com.qiu.util;
 
 
 import com.qiu.dao.pojo.Book;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -9,7 +11,9 @@ import org.mybatis.logging.Logger;
 import org.mybatis.logging.LoggerFactory;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedWriter;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -78,6 +82,40 @@ public class ExportUtil {
         return false;
     }
 
+    private static final String BOM = new String(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
+
+    public static boolean doCSVExport1(List<Map<Integer, Book>> dataList, List<String> titles, String mapKey,
+            PrintWriter os) {
+        try {
+            BufferedWriter bufferedWriter = new BufferedWriter(os);
+            bufferedWriter.write(BOM);
+            CSVPrinter csvPrinter = new CSVPrinter(bufferedWriter, CSVFormat.DEFAULT);
+            String[] mapKeyArr = null;
+
+            // 完成数据csv文件的封装
+            // 输出列头
+            csvPrinter.printRecords(titles);
+
+            mapKeyArr = mapKey.split(",");
+
+            if (null != dataList) { // 输出数据
+                for (int i = 0; i < dataList.size(); i++) {
+                    for (int j = 0; j < mapKeyArr.length; j++) {
+                        Map<Integer, Book> integerBookMap = dataList.get(i);
+                        Book book = integerBookMap.get(Integer.parseInt(mapKeyArr[j]));
+                        csvPrinter.printRecords(book);
+                    }
+                }
+            }
+            // 写出响应
+            csvPrinter.flush();
+            return true;
+        } catch (Exception e) {
+//            logger.error("doExport错误...", e);
+        }
+        return false;
+    }
+
     /**
      * @throws UnsupportedEncodingException setHeader
      */
@@ -90,6 +128,7 @@ public class ExportUtil {
         String utf = "UTF-8";
 
         // 设置响应
+        response.setCharacterEncoding("utf-8");
         response.setContentType("application/ms-txt.numberformat:@");
         response.setCharacterEncoding(utf);
         response.setHeader("Pragma", "public");
