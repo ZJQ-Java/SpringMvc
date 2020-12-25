@@ -30,14 +30,13 @@ public class FileController {
     @RequestMapping("download/books")
     @ResponseBody
     public void CSVTest(HttpServletResponse response) throws IOException {
-        String sTitle = "书id,书名,书的数量,书的详细信息";
         String fName = "books";
         String mapKey = "1,2,3,4,5";
         long startTime = System.currentTimeMillis();
-
+        List<String> titles = Arrays.asList("书id", "书名", "书的数量", "书的详细信息");
         try (PrintWriter os = response.getWriter()) {
             ExportUtil.responseSetProperties(fName, response);
-            ExportUtil.doCSVExport1(dataList, Arrays.asList(sTitle.split(",")), mapKey, os);
+            ExportUtil.doCSVExport1(dataList, titles, mapKey, os);
 
         } catch (Exception e) {
             e.printStackTrace();

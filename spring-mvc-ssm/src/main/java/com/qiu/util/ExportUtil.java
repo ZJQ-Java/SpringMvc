@@ -11,12 +11,10 @@ import org.mybatis.logging.Logger;
 import org.mybatis.logging.LoggerFactory;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedWriter;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -88,13 +86,14 @@ public class ExportUtil {
             PrintWriter os) {
         try {
             BufferedWriter bufferedWriter = new BufferedWriter(os);
-            bufferedWriter.write(BOM);
-            CSVPrinter csvPrinter = new CSVPrinter(bufferedWriter, CSVFormat.DEFAULT);
-            String[] mapKeyArr = null;
+//            bufferedWriter.write(BOM);
 
+            CSVPrinter csvPrinter = new CSVPrinter(bufferedWriter, CSVFormat.DEFAULT);
+
+            String[] mapKeyArr = null;
             // 完成数据csv文件的封装
             // 输出列头
-            csvPrinter.printRecords(titles);
+            csvPrinter.printRecord(titles);
 
             mapKeyArr = mapKey.split(",");
 
@@ -103,7 +102,9 @@ public class ExportUtil {
                     for (int j = 0; j < mapKeyArr.length; j++) {
                         Map<Integer, Book> integerBookMap = dataList.get(i);
                         Book book = integerBookMap.get(Integer.parseInt(mapKeyArr[j]));
-                        csvPrinter.printRecords(book);
+                        List<?> serializables = Arrays
+                                .asList(book.getId(), book.getBookName(), book.getBookCounts(), book.getDetail());
+                        csvPrinter.printRecord(serializables);
                     }
                 }
             }
@@ -125,15 +126,14 @@ public class ExportUtil {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         String fn = fileName + sdf.format(new Date()).toString() + ".csv";
         // 读取字符编码
-        String utf = "UTF-8";
 
         // 设置响应
-        response.setCharacterEncoding("utf-8");
-        response.setContentType("application/ms-txt.numberformat:@");
-        response.setCharacterEncoding(utf);
+//        response.setContentType("application/ms-txt.numberformat:@");
+        response.setContentType("text/csv");
+        response.setCharacterEncoding("UTF-8");
         response.setHeader("Pragma", "public");
         response.setHeader("Cache-Control", "max-age=30");
-        response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fn, utf));
+        response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fn, "UTF-8"));
     }
 
     public static Workbook writeExcel(Workbook excel, List<String> titles, List<Map<Integer, Book>> dataList) {
