@@ -5,6 +5,8 @@ import com.qiu.dao.pojo.Book;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.mybatis.logging.Logger;
+import org.mybatis.logging.LoggerFactory;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
@@ -16,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ExportUtil {
-//    private static final Logger logger               = LoggerFactory.getLogger(ExportUtil.class);
+    private static final Logger logger               = LoggerFactory.getLogger(ExportUtil.class);
     /**
      * CSV文件列分隔符
      */
@@ -63,12 +65,12 @@ public class ExportUtil {
 
                     }
                 }
-                os.write(buf.toString().getBytes("GBK"));
-                os.flush();
+
                 buf = new StringBuffer();
             }
             // 写出响应
-
+            os.write(buf.toString().getBytes("GBK"));
+            os.flush();
             return true;
         } catch (Exception e) {
 //            logger.error("doExport错误...", e);
