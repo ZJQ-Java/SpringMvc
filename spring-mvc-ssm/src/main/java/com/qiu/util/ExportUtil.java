@@ -13,6 +13,7 @@ import org.mybatis.logging.LoggerFactory;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -81,35 +82,36 @@ public class ExportUtil {
     }
 
     private static final String BOM = new String(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
-
     public static boolean doCSVExport1(List<Map<Integer, Book>> dataList, List<String> titles, String mapKey,
-            PrintWriter os) {
+            OutputStream os) {
         try {
-            BufferedWriter bufferedWriter = new BufferedWriter(os);
-//            bufferedWriter.write(BOM);
+            os.write(239);   // 0xEF
+            os.write(187);   // 0xBB
+            os.write(191);   // 0xBF
+            PrintWriter w = new PrintWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
 
-            CSVPrinter csvPrinter = new CSVPrinter(bufferedWriter, CSVFormat.DEFAULT);
-
+            CSVPrinter csvPrinter = new CSVPrinter(w, CSVFormat.DEFAULT);
             String[] mapKeyArr = null;
             // 完成数据csv文件的封装
-            // 输出列头
+
             csvPrinter.printRecord(titles);
 
-            mapKeyArr = mapKey.split(",");
-
-            if (null != dataList) { // 输出数据
-                for (int i = 0; i < dataList.size(); i++) {
-                    for (int j = 0; j < mapKeyArr.length; j++) {
-                        Map<Integer, Book> integerBookMap = dataList.get(i);
-                        Book book = integerBookMap.get(Integer.parseInt(mapKeyArr[j]));
-                        List<?> serializables = Arrays
-                                .asList(book.getId(), book.getBookName(), book.getBookCounts(), book.getDetail());
-                        csvPrinter.printRecord(serializables);
-                    }
-                }
-            }
+//            mapKeyArr = mapKey.split(",");
+//
+//            if (null != dataList) { // 输出数据
+//                for (int i = 0; i < dataList.size(); i++) {
+//                    for (int j = 0; j < mapKeyArr.length; j++) {
+//                        Map<Integer, Book> integerBookMap = dataList.get(i);
+//                        Book book = integerBookMap.get(Integer.parseInt(mapKeyArr[j]));
+//                        List<?> serializables = Arrays
+//                                .asList(book.getId(), book.getBookName(), book.getBookCounts(), book.getDetail());
+//                        csvPrinter.printRecord(serializables);
+//                    }
+//                }
+//            }
             // 写出响应
             csvPrinter.flush();
+            csvPrinter.close();
             return true;
         } catch (Exception e) {
 //            logger.error("doExport错误...", e);
@@ -129,11 +131,13 @@ public class ExportUtil {
 
         // 设置响应
 //        response.setContentType("application/ms-txt.numberformat:@");
+//        response.setCharacterEncoding("UTF-8");
+//        response.setHeader("Pragma", "public");
+//        response.setHeader("Cache-Control", "max-age=30");
+//        response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fn, "UTF-8"));
+        response.setHeader("Content-disposition",
+                "attachment; filename* = UTF-8''" + URLEncoder.encode(fn, "UTF-8"));
         response.setContentType("text/csv");
-        response.setCharacterEncoding("UTF-8");
-        response.setHeader("Pragma", "public");
-        response.setHeader("Cache-Control", "max-age=30");
-        response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fn, "UTF-8"));
     }
 
     public static Workbook writeExcel(Workbook excel, List<String> titles, List<Map<Integer, Book>> dataList) {
