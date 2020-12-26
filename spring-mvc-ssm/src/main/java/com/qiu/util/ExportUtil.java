@@ -110,6 +110,7 @@ public class ExportUtil {
 //                }
 //            }
             // 写出响应
+            w.close();
             csvPrinter.flush();
             csvPrinter.close();
             return true;
