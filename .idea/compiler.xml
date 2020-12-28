@@ -12,6 +12,7 @@
         <module name="spring-mvc-ssm" />
         <module name="spring-mvc-interceptor" />
         <module name="spring-mvc-json04" />
+        <module name="ssm-mybatis-plus" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="8">
@@ -22,6 +23,7 @@
       <module name="spring-mvc-json04" target="1.8" />
       <module name="spring-mvc-ssm" target="1.8" />
       <module name="SpringMVC" target="1.8" />
+      <module name="ssm-mybatis-plus" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
