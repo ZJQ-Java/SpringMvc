@@ -7,10 +7,34 @@
             <PatternLayout pattern="%d{yyyy/MM/dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
         </Console>
     </Appenders>
+
+    <RollingRandomAccessFile name="accessLogAppender"
+                             fileName="${LOG_DIR}/access-s.log"
+                             filePattern="${LOG_DIR}/access.%d{yyyy-MM-dd}-%i.log"
+                             immediateFlush="false"
+                             append="true"
+                             bufferSize="16384">
+        <PatternLayout>
+            <Pattern>${LOG_ACCESS_STRING}</Pattern>
+        </PatternLayout>
+        <Policies>
+            <TimeBasedTriggeringPolicy/>
+            <SizeBasedTriggeringPolicy size="3GB"/>
+        </Policies>
+        <DefaultRolloverStrategy max="20"/>
+    </RollingRandomAccessFile>
+
+
+    <Async name="accessLogAsync" includeLocation="true">
+        <AppenderRef ref="accessLogAppender"/>
+    </Async>
     <!-- Loggers支持配置多个Logger，可引用不同的目标Appender，也可根据业务需求定制特定要求的Appender -->
     <Loggers>
         <Root level="info">
             <AppenderRef ref="Console" />
         </Root>
+        <Logger name="AccessLog" level="info" additivity="false">
+            <AppenderRef ref="accessLogAsync"/>
+        </Logger>
     </Loggers>
 </Configuration>
