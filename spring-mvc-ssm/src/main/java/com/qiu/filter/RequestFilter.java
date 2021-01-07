@@ -80,9 +80,6 @@ public class RequestFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
-        System.out.println(
-                "servletRequest = " + servletRequest + ", servletResponse = " + servletResponse + ", filterChain = " +
-                        filterChain);
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
@@ -99,7 +96,7 @@ public class RequestFilter implements Filter {
                         !StringUtils.isEmpty(ConfigHelper.getEnvironmentString())) {
                     throw e;
                 } else {
-                    log.error("currentEnv:" + ConfigHelper.getEnvironmentString() + " getAllowDomain error: " +
+                    log1.error("currentEnv:" + ConfigHelper.getEnvironmentString() + " getAllowDomain error: " +
                             e.toString());
                 }*/
             }
@@ -167,6 +164,7 @@ public class RequestFilter implements Filter {
     }
 
     private String getParams(Map<String,String[]> parameterMap){
+        //todo stringbuffer stringbuilder
         StringBuffer params = new StringBuffer();
         if (parameterMap != null && !parameterMap.isEmpty()) {
             params.append("\tPARAMS={");
