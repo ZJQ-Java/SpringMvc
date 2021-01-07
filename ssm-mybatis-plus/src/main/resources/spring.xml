@@ -41,9 +41,6 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
         <property name="typeAliasesPackage" value="com.qiu.dao.pojo"/>
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.baomidou.mybatisplus.samples.quickstart.mapper"/>
-    </bean>
 
 
     <!-- 4.配置扫描Dao接口包，动态实现Dao接口注入到spring容器中 -->
