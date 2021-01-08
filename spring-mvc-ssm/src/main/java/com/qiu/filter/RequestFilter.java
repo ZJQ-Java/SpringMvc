@@ -17,10 +17,6 @@ import java.util.List;
 import java.util.Map;
 
 public class RequestFilter implements Filter {
-    public static void main(String[] args) {
-        System.out.println(System.getProperty("user.dir"));
-        System.out.println(Thread.currentThread().getClass().getClassLoader());
-    }
     private static      Log               log;
     private static      Log               accessLog;
     public static final String            RESPONSE             = "RESPONSE";
@@ -86,7 +82,6 @@ public class RequestFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-
         request.removeAttribute(RESPONSE);
 
         long startTime = LocalTime.now().getNano() / 1000000;
@@ -96,13 +91,6 @@ public class RequestFilter implements Filter {
             try {
                 getAllowDomain(request);
             } catch (Exception e) {
-               /* if (!"online".equals(ConfigHelper.getEnvironmentString()) &&
-                        !StringUtils.isEmpty(ConfigHelper.getEnvironmentString())) {
-                    throw e;
-                } else {
-                    log1.error("currentEnv:" + ConfigHelper.getEnvironmentString() + " getAllowDomain error: " +
-                            e.toString());
-                }*/
             }
             if (!StringUtils.isEmpty(request.getHeader("origin"))) {
                 response.setHeader("Access-Control-Allow-Origin", request.getHeader("origin"));

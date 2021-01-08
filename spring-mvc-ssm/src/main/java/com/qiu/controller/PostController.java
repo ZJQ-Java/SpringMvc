@@ -1,6 +1,7 @@
 package com.qiu.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.qiu.MyException.CustomException;
 import com.qiu.dao.pojo.Book;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,8 +37,9 @@ public class PostController {
     }
 
     @RequestMapping(value="/json", method= RequestMethod.POST)
-    public void testPostJson(@RequestBody Book book){
-        System.out.println(book);
+    public void testPostJson(@RequestBody Book book) throws Exception {
+        throw new CustomException("test exception");
+//        System.out.println(book);
     }
 
     public static void main(String[] args) throws IOException {
