@@ -19,6 +19,7 @@ import java.util.Map;
 public class RequestFilter implements Filter {
     public static void main(String[] args) {
         System.out.println(System.getProperty("user.dir"));
+        System.out.println(Thread.currentThread().getClass().getClassLoader());
     }
     private static      Log               log;
     private static      Log               accessLog;
