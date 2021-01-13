@@ -1,4 +1,4 @@
-package com.qiu;
+package com.qiu.interceptor;
 
 import com.qiu.MyException.CustomException;
 import org.springframework.stereotype.Component;
@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-//@Component
+@Component
 public class ExceptionInterceptor implements HandlerExceptionResolver {
     @Override
     public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,

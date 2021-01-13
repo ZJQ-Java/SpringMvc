@@ -38,8 +38,8 @@ public class PostController {
 
     @RequestMapping(value="/json", method= RequestMethod.POST)
     public void testPostJson(@RequestBody Book book) throws Exception {
+        System.out.println("-------------json---------------");
         throw new CustomException("test exception");
-//        System.out.println(book);
     }
 
     public static void main(String[] args) throws IOException {
