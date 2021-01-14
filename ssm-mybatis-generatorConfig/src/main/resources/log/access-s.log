@@ -1,0 +1,13 @@
+2021-01-13_19:18:10.258	15	http://localhost:8080/post/json	null		null	null	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+2021-01-13_19:18:10.447	12	http://localhost:8080/favicon.ico	null		null	http://localhost:8080/post/json	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+2021-01-13_19:18:39.362	26	http://localhost:8080/post/json	null		null	null	PostmanRuntime/7.26.8
+2021-01-13_19:19:44.642	114	http://localhost:8080/post/json	null		null	null	PostmanRuntime/7.26.8
+2021-01-13_19:20:17.964	6	http://localhost:8080/post/json	null		null	null	PostmanRuntime/7.26.8
+2021-01-13_19:21:09.520	11	http://localhost:8080/post/json	null		null	null	PostmanRuntime/7.26.8
+2021-01-13_19:21:28.744	433	http://localhost:8080/post/json	null		null	null	PostmanRuntime/7.26.8
+2021-01-13_19:22:09.381	35	http://localhost:8080/post/json	null		null	null	PostmanRuntime/7.26.8
+2021-01-13_19:23:15.101	41	http://localhost:8080/post/json	null		null	null	PostmanRuntime/7.26.8
+2021-01-13_19:23:35.589	-460	http://localhost:8080/book/gets	null		null	null	PostmanRuntime/7.26.8
+2021-01-13_19:23:36.183	6	http://localhost:8080/book/gets	null		null	null	PostmanRuntime/7.26.8
+2021-01-13_19:24:31.773	43	http://localhost:8080/post/json	null		org.springframework.web.util.NestedServletException: Request processing failed; nested exception is CustomException{msg='test exception'}	null	PostmanRuntime/7.26.8
+2021-01-13_19:27:11.492	-502	http://localhost:8080/post/json	null		null	null	PostmanRuntime/7.26.8

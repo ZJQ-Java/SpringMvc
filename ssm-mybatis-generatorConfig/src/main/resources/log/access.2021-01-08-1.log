@@ -1,0 +1,8 @@
+2021-01-08_17:35:03.830	421	http://localhost:8080/post/json	null		null	null	PostmanRuntime/7.26.8
+2021-01-08_17:35:54.561	-108	http://localhost:8080/post/json	null		null	null	PostmanRuntime/7.26.8
+2021-01-08_17:38:40.328	124	http://localhost:8080/post/json	null		org.springframework.web.util.NestedServletException: Request processing failed; nested exception is java.lang.Exception: test exception	null	PostmanRuntime/7.26.8
+2021-01-08_17:39:01.462	431	http://localhost:8080/post/json	null		org.springframework.web.util.NestedServletException: Request processing failed; nested exception is java.lang.Exception: test exception	null	PostmanRuntime/7.26.8
+2021-01-08_17:52:44.386	175	http://localhost:8080/post/json	null		null	null	PostmanRuntime/7.26.8
+2021-01-08_17:53:39.328	719	http://localhost:8080/post/json	null		null	null	PostmanRuntime/7.26.8
+2021-01-08_17:54:34.919	-451	http://localhost:8080/post/json	null		org.springframework.web.util.NestedServletException: Request processing failed; nested exception is com.qiu.MyException.CustomException	null	PostmanRuntime/7.26.8
+2021-01-08_17:55:36.367	121	http://localhost:8080/post/json	null		org.springframework.web.util.NestedServletException: Request processing failed; nested exception is CustomException{msg='test exception'}	null	PostmanRuntime/7.26.8

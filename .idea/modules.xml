@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/spring-mvc-interceptor/spring-mvc-interceptor.iml" filepath="$PROJECT_DIR$/spring-mvc-interceptor/spring-mvc-interceptor.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-mvc-json04/spring-mvc-json04.iml" filepath="$PROJECT_DIR$/spring-mvc-json04/spring-mvc-json04.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-mvc-ssm/spring-mvc-ssm.iml" filepath="$PROJECT_DIR$/spring-mvc-ssm/spring-mvc-ssm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ssm-mybatis-generatorConfig/ssm-mybatis-generatorConfig.iml" filepath="$PROJECT_DIR$/ssm-mybatis-generatorConfig/ssm-mybatis-generatorConfig.iml" />
       <module fileurl="file://$PROJECT_DIR$/ssm-mybatis-plus/ssm-mybatis-plus.iml" filepath="$PROJECT_DIR$/ssm-mybatis-plus/ssm-mybatis-plus.iml" />
     </modules>
   </component>

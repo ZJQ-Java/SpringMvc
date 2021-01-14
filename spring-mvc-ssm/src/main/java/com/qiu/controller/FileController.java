@@ -18,7 +18,7 @@ import java.util.*;
 public class FileController {
     public static List<Map<Integer, Book>> dataList = new ArrayList<Map<Integer, Book>>();
 
-    static {
+   /* static {
         Map<Integer, Book> dataBase = null;
         for (int i = 0; i < 1_0; i++) {
             dataBase = new HashMap<>();
@@ -28,7 +28,7 @@ public class FileController {
             dataList.add(dataBase);
         }
 //        System.out.println(dataList);
-    }
+    }*/
 
     @RequestMapping("download/books")
     public void CSVTest(HttpServletResponse response) throws IOException {

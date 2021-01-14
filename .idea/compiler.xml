@@ -11,6 +11,7 @@
         <module name="servlet-demo01" />
         <module name="spring-mvc-ssm" />
         <module name="spring-mvc-interceptor" />
+        <module name="ssm-mybatis-generatorConfig" />
         <module name="spring-mvc-json04" />
         <module name="ssm-mybatis-plus" />
       </profile>
@@ -23,6 +24,7 @@
       <module name="spring-mvc-json04" target="1.8" />
       <module name="spring-mvc-ssm" target="1.8" />
       <module name="SpringMVC" target="1.8" />
+      <module name="ssm-mybatis-generatorConfig" target="1.8" />
       <module name="ssm-mybatis-plus" target="1.8" />
     </bytecodeTargetLevel>
   </component>
