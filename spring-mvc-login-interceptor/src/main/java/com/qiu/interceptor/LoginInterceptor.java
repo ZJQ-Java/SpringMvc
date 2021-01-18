@@ -11,17 +11,17 @@ public class LoginInterceptor implements HandlerInterceptor {
     //在请求处理的方法之前执行
     //如果返回true执行下一个拦截器
     //如果返回false就不执行下一个拦截器
-    public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o)
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o)
             throws Exception {
         System.out.println("------------处理前------------");
-        if (httpServletRequest.getRequestURI().contains("login")) {
+        if (request.getRequestURI().contains("login")) {
             return true;
         }
-        HttpSession session = httpServletRequest.getSession();
+        HttpSession session = request.getSession();
         if (session.getAttribute("user") != null) {
             return true;
         }
-        httpServletRequest.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(httpServletRequest, httpServletResponse);
+        request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
         return false;
     }
 
