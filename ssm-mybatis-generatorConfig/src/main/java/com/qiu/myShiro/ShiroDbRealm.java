@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class ShiroDbRealm extends AuthorizingRealm {
     @Autowired
     private             UserService userService;
-    public static final String      SESSION_USER_KEY = "gray";
+    public static final String      SESSION_USER_KEY = "SESSION_USER_KEY";
 
     /**
      * 授权查询回调函数, 进行鉴权但缓存中无用户的授权信息时调用,负责在应用程序中决定用户的访问控制的方法
@@ -45,7 +45,6 @@ public class ShiroDbRealm extends AuthorizingRealm {
         //当前 Realm 的 name
         String realmName = this.getName();
         //登陆的主要信息: 可以是一个实体类的对象, 但该实体类的对象一定是根据 token 的 username 查询得到的.
-//      Object principal = ui.getUsername();
         Object principal = authcToken.getPrincipal();
         return new SimpleAuthenticationInfo(principal, userLogin.getPassword(), realmName);
     }

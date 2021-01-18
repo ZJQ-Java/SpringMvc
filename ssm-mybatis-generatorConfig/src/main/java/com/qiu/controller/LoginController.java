@@ -24,7 +24,7 @@ public class LoginController {
 
     @RequestMapping("/dologin.do") //url
     public String dologin(User user, Model model) {
-        String info = loginUser(user);
+        String info = loginUserCheck(user);
         if (!"SUCC".equals(info)) {
             model.addAttribute("failMsg", "用户不存在或密码错误！");
             return "fail";
@@ -35,11 +35,10 @@ public class LoginController {
         }
     }
 
-    @RequestMapping("/toAdmin") //url
+   /* @RequestMapping("/toAdmin") //url
     public String toAdmin(HttpServletResponse response) throws IOException {
         return "admin";
-
-    }
+    }*/
 
     @RequestMapping("/toUser") //url
     public String toUser() throws IOException {
@@ -58,13 +57,12 @@ public class LoginController {
         response.sendRedirect("/index.jsp");
     }
 
-    private String loginUser(User user) {
-        if (isRelogin(user)) return "SUCC"; // 如果已经登陆，无需重新登录
-
-        return shiroLogin(user); // 调用shiro的登陆验证
-    }
-
-    private String shiroLogin(User user) {
+    private String loginUserCheck(User user) {
+        Subject us = SecurityUtils.getSubject();
+        // 如果已经登陆，无需重新登录
+        if (us.isAuthenticated()) {
+            return "SUCC";
+        }
         // 组装token，包括客户公司名称、简称、客户编号、用户名称；密码
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword().toCharArray(),
                 null);
@@ -84,8 +82,4 @@ public class LoginController {
         return "SUCC";
     }
 
-    private boolean isRelogin(User user) {
-        Subject us = SecurityUtils.getSubject();
-        return us.isAuthenticated(); // 参数未改变，无需重新登录，默认为已经登录成功
-    }
 }
