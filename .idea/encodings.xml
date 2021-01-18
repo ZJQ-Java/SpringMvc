@@ -10,5 +10,6 @@
     <file url="file://$PROJECT_DIR$/spring-mvc-ssm" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ssm-mybatis-generatorConfig" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ssm-mybatis-plus" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ssm-shiro" charset="UTF-8" />
   </component>
 </project>

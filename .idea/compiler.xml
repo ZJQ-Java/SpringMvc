@@ -7,11 +7,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="spring-mvc-demo03" />
-        <module name="spring-mvc-demo02" />
+        <module name="ssm-mybatis-generatorConfig" />
         <module name="servlet-demo01" />
         <module name="spring-mvc-ssm" />
         <module name="spring-mvc-interceptor" />
-        <module name="ssm-mybatis-generatorConfig" />
+        <module name="spring-mvc-demo02" />
         <module name="spring-mvc-json04" />
         <module name="ssm-mybatis-plus" />
       </profile>
@@ -26,6 +26,7 @@
       <module name="SpringMVC" target="1.8" />
       <module name="ssm-mybatis-generatorConfig" target="1.8" />
       <module name="ssm-mybatis-plus" target="1.8" />
+      <module name="ssm-shiro" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -3,6 +3,7 @@ package com.qiu.controller;
 import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.qiu.MyException.CustomException;
 import com.qiu.dao.pojo.Book;
 import com.qiu.server.BookServer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Currency;
 import java.util.List;
 
 
@@ -43,6 +45,11 @@ public class BookController {
         System.out.println(book);
         bookServer.testTransaction(book);
         return "success";
+    }
+
+    @GetMapping("book/exception")
+    public String testException() throws CustomException {
+        throw new CustomException("test");
     }
 
 }

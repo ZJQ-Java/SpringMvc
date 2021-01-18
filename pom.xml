@@ -19,6 +19,7 @@
         <module>spring-mvc-interceptor</module>
         <module>ssm-mybatis-plus</module>
         <module>ssm-mybatis-generatorConfig</module>
+        <module>ssm-shiro</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
