@@ -95,20 +95,21 @@ public class ExportUtil {
             // 完成数据csv文件的封装
 
             csvPrinter.printRecord(titles);
+            csvPrinter.flush();
+            Thread.sleep(5000);
+            mapKeyArr = mapKey.split(",");
 
-//            mapKeyArr = mapKey.split(",");
-//
-//            if (null != dataList) { // 输出数据
-//                for (int i = 0; i < dataList.size(); i++) {
-//                    for (int j = 0; j < mapKeyArr.length; j++) {
-//                        Map<Integer, Book> integerBookMap = dataList.get(i);
-//                        Book book = integerBookMap.get(Integer.parseInt(mapKeyArr[j]));
-//                        List<?> serializables = Arrays
-//                                .asList(book.getId(), book.getBookName(), book.getBookCounts(), book.getDetail());
-//                        csvPrinter.printRecord(serializables);
-//                    }
-//                }
-//            }
+            if (null != dataList) { // 输出数据
+                for (int i = 0; i < dataList.size(); i++) {
+                    for (int j = 0; j < mapKeyArr.length; j++) {
+                        Map<Integer, Book> integerBookMap = dataList.get(i);
+                        Book book = integerBookMap.get(Integer.parseInt(mapKeyArr[j]));
+                        List<?> serializables = Arrays
+                                .asList(book.getId(), book.getBookName(), book.getBookCounts(), book.getDetail());
+                        csvPrinter.printRecord(serializables);
+                    }
+                }
+            }
             // 写出响应
             w.close();
             csvPrinter.flush();
