@@ -22,7 +22,7 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/dologin.do") //url
+    @RequestMapping("/login") //url
     public String dologin(User user, Model model) {
         String info = loginUserCheck(user);
         if (!"SUCC".equals(info)) {
@@ -45,7 +45,7 @@ public class LoginController {
         return "user";
     }
 
-    @RequestMapping("/logout.do")
+    @RequestMapping("/logout")
     public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Subject subject = SecurityUtils.getSubject();
         if (subject != null) {

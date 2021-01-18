@@ -22,6 +22,6 @@ ${successMsg } Welcome!  <shiro:principal/>
 </shiro:hasAnyRoles>
 
 <br><br>
-<a href="../logout.do">Logout</a>
+<a href="../logout">Logout</a>
 </body>
 </html>

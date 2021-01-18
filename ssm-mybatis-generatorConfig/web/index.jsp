@@ -8,7 +8,7 @@
   <script src="./js/jquery.js" type="text/javascript"></script>
 </head>
 <body>
-<form action="../dologin.do" method="post">
+<form action="../login" method="post">
   <table>
     <tr>
       <td><label>用户名</label></td>
