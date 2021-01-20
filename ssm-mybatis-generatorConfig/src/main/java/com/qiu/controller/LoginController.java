@@ -22,6 +22,11 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
+    @RequestMapping(value = {"/index", "", "/"}) //url
+    public String index(User user, Model model) {
+        return "index";
+    }
+
     @RequestMapping("/login") //url
     public String dologin(User user, Model model) {
         String info = loginUserCheck(user);
@@ -35,10 +40,6 @@ public class LoginController {
         }
     }
 
-   /* @RequestMapping("/toAdmin") //url
-    public String toAdmin(HttpServletResponse response) throws IOException {
-        return "admin";
-    }*/
 
     @RequestMapping("/toUser") //url
     public String toUser() throws IOException {
@@ -54,7 +55,7 @@ public class LoginController {
             } catch (Exception ex) {
             }
         }
-        response.sendRedirect("/index.jsp");
+        response.sendRedirect("/");
     }
 
     private String loginUserCheck(User user) {

@@ -88,21 +88,26 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
         <!-- 装配 securityManager -->
         <property name="securityManager" ref="securityManager"/>
         <!-- 配置登陆页面 -->
-        <property name="loginUrl" value="/index.jsp"/>
+        <property name="loginUrl" value="/"/>
         <!-- 登陆成功后的一面 -->
-        <property name="successUrl" value="/jsp/success.jsp"/>
-        <property name="unauthorizedUrl" value="/jsp/unauthorized.jsp"/>
+<!--        <property name="successUrl" value="/jsp/success.jsp"/>-->
+<!--        <property name="unauthorizedUrl" value="/jsp/unauthorized.jsp"/>-->
         <!-- 具体配置需要拦截哪些 URL, 以及访问对应的 URL 时使用 Shiro 的什么 Filter 进行拦截.  -->
         <property name="filterChainDefinitions">
             <value>
-                /index.jsp=anon
-                /jsp/success.jsp=anon
-                /jsp/fail.jsp=anon
+            <!-- org.apache.shiro.web.filter.mgt.DefaultFilter
+                 anon：匿名过滤器，该过滤器的作用就是用于配置不需要授权就可以直接访问的路径
+　　             authc：校验过滤器，该过滤器的作用就是用于必须经过校验才可以访问的路径（url）
+　　             logout：注销过滤器，该过滤器的作用就是用于注销退出登录
+　　             perms：权限验证过滤器，用于权限验证的 -->
+                /=anon
                 /jsp/user.jsp = roles[user]
                 /jsp/admin.jsp = roles[admin]
                 /logout = logout
+                /book/*=authc
             </value>
         </property>
+        <!-- Shiro Filter -->
     </bean>
 
     <!-- 配置缓存管理器 -->

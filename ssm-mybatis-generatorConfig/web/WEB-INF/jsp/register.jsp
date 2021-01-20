@@ -43,7 +43,7 @@ pageEncoding="utf-8"%>
             var user = $('#info').serialize();
             $.post('../register.do',user,function(data){
                 if(hasSucc(data)){
-                    window.location = "../index.jsp";
+                    window.location = "index.jsp";
                 }else{
                     $('#errMsg').html(data.error);
                 }
