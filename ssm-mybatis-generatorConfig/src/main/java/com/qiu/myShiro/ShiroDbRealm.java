@@ -7,6 +7,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
@@ -67,4 +68,8 @@ public class ShiroDbRealm extends AuthorizingRealm {
         return user;
     }
 
+    public static void main(String[] args) {
+        SimpleHash md5 = new SimpleHash("md5", "123", null, 2);
+        System.out.println(md5);
+    }
 }
