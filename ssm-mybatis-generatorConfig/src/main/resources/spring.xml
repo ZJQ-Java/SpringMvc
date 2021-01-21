@@ -101,8 +101,8 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 　　             logout：注销过滤器，该过滤器的作用就是用于注销退出登录
 　　             perms：权限验证过滤器，用于权限验证的 -->
                 /=anon
-                /jsp/user.jsp = roles[user]
-                /jsp/admin.jsp = roles[admin]
+                /toUser = roles[user]
+                /toAdmin = roles[admin]
                 /logout = logout
                 /book/*=authc
             </value>
@@ -117,10 +117,14 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     </bean>
     <!-- 配置进行授权和认证的 Realm -->
     <bean id="myRealm" class="com.qiu.myShiro.ShiroDbRealm"/>
+    <bean id="hashedCredentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        <property name="hashAlgorithmName" value="md5"/>
+        <property name="hashIterations" value="2"/>
+    </bean>
     <!-- 配置 Shiro 的 SecurityManager Bean. -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="cacheManager" ref="cacheManager"/>
-        <property name="realm" ref="myRealm"/>
+        <property name="realm"  ref="myRealm"/>
         <property name="sessionMode" value="native">
         </property>
     </bean>

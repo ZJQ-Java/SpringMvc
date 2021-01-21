@@ -4,8 +4,7 @@
   <resultMap id="BaseResultMap" type="com.qiu.dao.pojo.User">
     <id column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="age" jdbcType="INTEGER" property="age" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="salt" jdbcType="VARCHAR" property="salt" />
     <result column="role" jdbcType="VARCHAR" property="role" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -67,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    username, password, age, name, role
+    username, password, salt, role
   </sql>
   <select id="selectByExample" parameterType="com.qiu.dao.pojo.UserExample" resultMap="BaseResultMap">
     select
@@ -100,10 +99,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.qiu.dao.pojo.User">
-    insert into user (username, password, age, 
-      name, role)
-    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, 
-      #{name,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR})
+    insert into user (username, password, salt, 
+      role)
+    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, 
+      #{role,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.qiu.dao.pojo.User">
     insert into user
@@ -114,11 +113,8 @@
       <if test="password != null">
         password,
       </if>
-      <if test="age != null">
-        age,
-      </if>
-      <if test="name != null">
-        name,
+      <if test="salt != null">
+        salt,
       </if>
       <if test="role != null">
         role,
@@ -131,11 +127,8 @@
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
       </if>
-      <if test="age != null">
-        #{age,jdbcType=INTEGER},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
+      <if test="salt != null">
+        #{salt,jdbcType=VARCHAR},
       </if>
       <if test="role != null">
         #{role,jdbcType=VARCHAR},
@@ -157,11 +150,8 @@
       <if test="record.password != null">
         password = #{record.password,jdbcType=VARCHAR},
       </if>
-      <if test="record.age != null">
-        age = #{record.age,jdbcType=INTEGER},
-      </if>
-      <if test="record.name != null">
-        name = #{record.name,jdbcType=VARCHAR},
+      <if test="record.salt != null">
+        salt = #{record.salt,jdbcType=VARCHAR},
       </if>
       <if test="record.role != null">
         role = #{record.role,jdbcType=VARCHAR},
@@ -175,8 +165,7 @@
     update user
     set username = #{record.username,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
-      age = #{record.age,jdbcType=INTEGER},
-      name = #{record.name,jdbcType=VARCHAR},
+      salt = #{record.salt,jdbcType=VARCHAR},
       role = #{record.role,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -188,11 +177,8 @@
       <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
       </if>
-      <if test="age != null">
-        age = #{age,jdbcType=INTEGER},
-      </if>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
+      <if test="salt != null">
+        salt = #{salt,jdbcType=VARCHAR},
       </if>
       <if test="role != null">
         role = #{role,jdbcType=VARCHAR},
@@ -203,8 +189,7 @@
   <update id="updateByPrimaryKey" parameterType="com.qiu.dao.pojo.User">
     update user
     set password = #{password,jdbcType=VARCHAR},
-      age = #{age,jdbcType=INTEGER},
-      name = #{name,jdbcType=VARCHAR},
+      salt = #{salt,jdbcType=VARCHAR},
       role = #{role,jdbcType=VARCHAR}
     where username = #{username,jdbcType=VARCHAR}
   </update>

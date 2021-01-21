@@ -5,9 +5,7 @@ public class User {
 
     private String password;
 
-    private Integer age;
-
-    private String name;
+    private String salt;
 
     private String role;
 
@@ -27,20 +25,12 @@ public class User {
         this.password = password == null ? null : password.trim();
     }
 
-    public Integer getAge() {
-        return age;
+    public String getSalt() {
+        return salt;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setSalt(String salt) {
+        this.salt = salt == null ? null : salt.trim();
     }
 
     public String getRole() {

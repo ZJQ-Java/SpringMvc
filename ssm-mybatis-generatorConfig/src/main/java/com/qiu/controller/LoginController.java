@@ -8,6 +8,8 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,8 +21,9 @@ import java.io.IOException;
 
 @Controller
 public class LoginController {
+    private static  final Logger      log = LoggerFactory.getLogger(LoginController.class);
     @Autowired
-    private UserService userService;
+    private               UserService userService;
 
     @RequestMapping(value = {"/index", "", "/"}) //url
     public String index(User user, Model model) {
@@ -40,6 +43,10 @@ public class LoginController {
         }
     }
 
+    @RequestMapping("/toAdmin") //url
+    public String toAdmin(HttpServletResponse response) throws IOException {
+        return "admin";
+    }
 
     @RequestMapping("/toUser") //url
     public String toUser() throws IOException {

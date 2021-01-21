@@ -22,16 +22,8 @@
     </tr>
     <tr>
       <td><input type="submit" name="login" value="登录" /></td>
-      <td><input id="registerBtn" type="button" name="register" value="注册"/></td>
     </tr>
   </table>
 </form>
-<script type="text/javascript">
-  $(function(){
-    $("#registerBtn").click(function(event){
-      window.location = "../jsp/register.jsp";
-    });
-  });
-</script>
 </body>
 </html>

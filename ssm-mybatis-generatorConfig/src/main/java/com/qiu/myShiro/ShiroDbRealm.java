@@ -1,5 +1,6 @@
 package com.qiu.myShiro;
 
+import com.qiu.controller.LoginController;
 import com.qiu.dao.pojo.User;
 import com.qiu.server.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -9,9 +10,15 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.Subject;
+import org.apache.shiro.util.ByteSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ShiroDbRealm extends AuthorizingRealm {
+    private static  final Logger log = LoggerFactory.getLogger(LoginController.class);
+
     @Autowired
     private             UserService userService;
     public static final String      SESSION_USER_KEY = "SESSION_USER_KEY";
@@ -21,7 +28,10 @@ public class ShiroDbRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection arg0) {
-        User user = (User) SecurityUtils.getSubject().getSession().getAttribute(ShiroDbRealm.SESSION_USER_KEY);
+        /*User user = (User) SecurityUtils.getSubject().getSession().getAttribute(ShiroDbRealm.SESSION_USER_KEY);*/
+        log.info("doGetAuthorizationInfo 进入授权");
+        Subject subject = SecurityUtils.getSubject();
+        User user = (User) subject.getPrincipal();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.addRole(user.getRole().trim());
         return info;
@@ -33,6 +43,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(
             AuthenticationToken authcToken) throws AuthenticationException {
+        log.info("doGetAuthenticationInfo 进入认证");
         // 把token转换成User对象
         User userLogin = tokenToUser((UsernamePasswordToken) authcToken);
         // 验证用户是否可以登录
@@ -45,8 +56,8 @@ public class ShiroDbRealm extends AuthorizingRealm {
         //当前 Realm 的 name
         String realmName = this.getName();
         //登陆的主要信息: 可以是一个实体类的对象, 但该实体类的对象一定是根据 token 的 username 查询得到的.
-        Object principal = authcToken.getPrincipal();
-        return new SimpleAuthenticationInfo(principal, userLogin.getPassword(), realmName);
+        //第一个参数principal 可以在授权的时候获取到
+        return new SimpleAuthenticationInfo(ui, ui.getPassword(), ByteSource.Util.bytes(ui.getSalt()), realmName);
     }
 
     private User tokenToUser(UsernamePasswordToken authcToken) {

@@ -16,10 +16,9 @@
         <module>spring-mvc-demo03</module>
         <module>spring-mvc-json04</module>
         <module>spring-mvc-ssm</module>
-        <module>spring-mvc-interceptor</module>
+        <module>spring-mvc-login-interceptor</module>
         <module>ssm-mybatis-plus</module>
         <module>ssm-mybatis-generatorConfig</module>
-        <module>ssm-shiro</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -112,6 +111,7 @@
                 <artifactId>aspectjweaver</artifactId>
                 <version>1.8.9</version>
             </dependency>
+            <!--log4j2驱动：-->
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-api</artifactId>
@@ -121,6 +121,20 @@
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-core</artifactId>
                 <version>2.11.2</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.7.30</version>
+            </dependency>
+            <!--log4j 与 slf4j 桥接   -->
+            <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl -->
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-slf4j-impl</artifactId>
+                <version>2.11.2</version>
+                <scope>test</scope>
             </dependency>
 
             <!--            test-->
