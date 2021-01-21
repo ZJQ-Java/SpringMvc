@@ -43,6 +43,19 @@ public class LoginController {
         }
     }
 
+    @RequestMapping("/registered") //url
+    public String registered(User user, Model model) {
+//        if (!"SUCC".equals(info)) {
+//            model.addAttribute("failMsg", "用户不存在或密码错误！");
+//            return "fail";
+//        } else {
+//            model.addAttribute("successMsg", "注册成功！");//返回到页面说夹带的参数
+//            model.addAttribute("name", user.getUsername());
+//            return "/index";//返回的页面
+//        }
+        return "/";
+    }
+
     @RequestMapping("/toAdmin") //url
     public String toAdmin(HttpServletResponse response) throws IOException {
         return "admin";

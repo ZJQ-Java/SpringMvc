@@ -7,7 +7,7 @@
         <!--<Property name="LOG_LEVEL">INFO</Property> -->
         <Property name="LOG_PATTERN">%d{yyyy-MM-dd_HH:mm:ss.SSS} %-5p [%t] %c{3}.%M %L - %m%n %throwable</Property>
         <Property name="LOG_ACCESS_STRING">%d{yyyy-MM-dd_HH:mm:ss.SSS}\t%m%n</Property>
-        <Property name="LOG_DIR">D:\Java学习\SpringMvc\spring-mvc-ssm\src\main\resources\log</Property>
+        <Property name="LOG_DIR">./log</Property>
     </Properties>
     <!-- Appenders支持配置多个Appender，支持向不同的目标输送日志，本例为配置向控制台输出 -->
     <Appenders>
