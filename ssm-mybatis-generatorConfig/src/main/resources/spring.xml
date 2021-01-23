@@ -37,7 +37,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
         <!--指定xml文件位置-->
         <property name="mapperLocations" value="classpath:com/qiu/dao/mapper/xml/*.xml"/>
         <!--        指定mybatsi-xml 主要配置setting typeAliases-->
-<!--        <property name="configLocation" value="mybatis-config.xml"/>-->
+        <!--        <property name="configLocation" value="mybatis-config.xml"/>-->
         <property name="typeAliasesPackage" value="com.qiu.dao.pojo"/>
     </bean>
 
@@ -52,7 +52,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 
 
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource" />
+        <property name="dataSource" ref="dataSource"/>
     </bean>
 
     <!-- 配置事务通知属性 -->
@@ -72,7 +72,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
             <!--            <tx:method name="get*" propagation="REQUIRED" read-only="true" />-->
             <!--            <tx:method name="find*" propagation="REQUIRED" read-only="true" />-->
             <!--            <tx:method name="load*" propagation="REQUIRED" read-only="true" />-->
-            <tx:method name="*" propagation="REQUIRED" />
+            <tx:method name="*" propagation="REQUIRED"/>
         </tx:attributes>
     </tx:advice>
 
@@ -80,8 +80,8 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     <!-- 配置事务切面 -->
     <aop:config>
         <aop:pointcut id="serviceOperation"
-                      expression="execution(* com.qiu.server..*.*(..))" />
-        <aop:advisor advice-ref="txAdvice1" pointcut-ref="serviceOperation" />
+                      expression="execution(* com.qiu.server..*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice1" pointcut-ref="serviceOperation"/>
     </aop:config>
 
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
@@ -90,16 +90,16 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
         <!-- 配置登陆页面 -->
         <property name="loginUrl" value="/"/>
         <!-- 登陆成功后的一面 -->
-<!--        <property name="successUrl" value="/jsp/success.jsp"/>-->
-<!--        <property name="unauthorizedUrl" value="/jsp/unauthorized.jsp"/>-->
+        <!--        <property name="successUrl" value="/jsp/success.jsp"/>-->
+        <!--        <property name="unauthorizedUrl" value="/jsp/unauthorized.jsp"/>-->
         <!-- 具体配置需要拦截哪些 URL, 以及访问对应的 URL 时使用 Shiro 的什么 Filter 进行拦截.  -->
         <property name="filterChainDefinitions">
             <value>
-            <!-- org.apache.shiro.web.filter.mgt.DefaultFilter
-                 anon：匿名过滤器，该过滤器的作用就是用于配置不需要授权就可以直接访问的路径
-　　             authc：校验过滤器，该过滤器的作用就是用于必须经过校验才可以访问的路径（url）
-　　             logout：注销过滤器，该过滤器的作用就是用于注销退出登录
-　　             perms：权限验证过滤器，用于权限验证的 -->
+                <!-- org.apache.shiro.web.filter.mgt.DefaultFilter
+                     anon：匿名过滤器，该过滤器的作用就是用于配置不需要授权就可以直接访问的路径
+    　　             authc：校验过滤器，该过滤器的作用就是用于必须经过校验才可以访问的路径（url）
+    　　             logout：注销过滤器，该过滤器的作用就是用于注销退出登录
+    　　             perms：权限验证过滤器，用于权限验证的 -->
                 /=anon
                 /toUser = roles[user]
                 /toAdmin = roles[admin]
@@ -115,17 +115,20 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
         <!-- 指定 ehcache 的配置文件 -->
         <property name="cacheManagerConfigFile" value="classpath:ehcache-shiro.xml"/>
     </bean>
-    <!-- 配置进行授权和认证的 Realm -->
-    <bean id="myRealm" class="com.qiu.myShiro.ShiroDbRealm"/>
+
+
     <bean id="hashedCredentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
-        <property name="hashAlgorithmName" value="md5"/>
+        <property name="hashAlgorithmName" value="MD5"/>
         <property name="hashIterations" value="2"/>
     </bean>
+    <!-- 配置进行授权和认证的 Realm -->
+    <bean id="myRealm" class="com.qiu.myShiro.ShiroDbRealm">
+        <property name="credentialsMatcher" ref="hashedCredentialsMatcher"/>
+    </bean>
+
     <!-- 配置 Shiro 的 SecurityManager Bean. -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="cacheManager" ref="cacheManager"/>
-        <property name="realm"  ref="myRealm"/>
-        <property name="sessionMode" value="native">
-        </property>
+        <property name="realm" ref="myRealm"/>
     </bean>
 </beans>

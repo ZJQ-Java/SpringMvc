@@ -58,7 +58,8 @@ public class ShiroDbRealm extends AuthorizingRealm {
         String realmName = this.getName();
         //登陆的主要信息: 可以是一个实体类的对象, 但该实体类的对象一定是根据 token 的 username 查询得到的.
         //第一个参数principal 可以在授权的时候获取到
-        return new SimpleAuthenticationInfo(ui, ui.getPassword(), ByteSource.Util.bytes(ui.getSalt()), realmName);
+        return new SimpleAuthenticationInfo(ui, ui.getPassword(),
+                ByteSource.Util.bytes(ui.getSalt()), realmName);
     }
 
     private User tokenToUser(UsernamePasswordToken authcToken) {
@@ -69,7 +70,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
     }
 
     public static void main(String[] args) {
-        SimpleHash md5 = new SimpleHash("md5", "123", null, 2);
+        SimpleHash md5 = new SimpleHash("MD5", "123", ByteSource.Util.bytes("123"), 2);
         System.out.println(md5);
     }
 }

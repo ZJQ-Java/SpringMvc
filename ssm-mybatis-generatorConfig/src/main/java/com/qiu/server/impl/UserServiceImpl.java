@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User doUserLogin(User user) {
         UserExample where = new UserExample();
-        where.createCriteria().andUsernameEqualTo(user.getUsername()).andPasswordEqualTo(user.getPassword());
+        where.createCriteria().andUsernameEqualTo(user.getUsername());
         List<User> list = userMapper.selectByExample(where);
         return list == null || list.isEmpty() ? null : list.get(0);
     }

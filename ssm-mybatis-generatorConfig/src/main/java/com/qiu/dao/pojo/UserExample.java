@@ -244,6 +244,76 @@ public class UserExample {
             return (Criteria) this;
         }
 
+        public Criteria andPPasswordIsNull() {
+            addCriterion("p_password is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPPasswordIsNotNull() {
+            addCriterion("p_password is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPPasswordEqualTo(String value) {
+            addCriterion("p_password =", value, "pPassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPPasswordNotEqualTo(String value) {
+            addCriterion("p_password <>", value, "pPassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPPasswordGreaterThan(String value) {
+            addCriterion("p_password >", value, "pPassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPPasswordGreaterThanOrEqualTo(String value) {
+            addCriterion("p_password >=", value, "pPassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPPasswordLessThan(String value) {
+            addCriterion("p_password <", value, "pPassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPPasswordLessThanOrEqualTo(String value) {
+            addCriterion("p_password <=", value, "pPassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPPasswordLike(String value) {
+            addCriterion("p_password like", value, "pPassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPPasswordNotLike(String value) {
+            addCriterion("p_password not like", value, "pPassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPPasswordIn(List<String> values) {
+            addCriterion("p_password in", values, "pPassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPPasswordNotIn(List<String> values) {
+            addCriterion("p_password not in", values, "pPassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPPasswordBetween(String value1, String value2) {
+            addCriterion("p_password between", value1, value2, "pPassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPPasswordNotBetween(String value1, String value2) {
+            addCriterion("p_password not between", value1, value2, "pPassword");
+            return (Criteria) this;
+        }
+
         public Criteria andSaltIsNull() {
             addCriterion("salt is null");
             return (Criteria) this;

@@ -1,0 +1,18 @@
+ CREATE TABLE `user` (
+  `username` varchar(40) NOT NULL,
+  `password` varchar(100) DEFAULT NULL,
+  `p_password` varchar(45) DEFAULT NULL COMMENT '明文密码',
+  `salt` varchar(40) NOT NULL COMMENT '加盐',
+  `role` varchar(40) DEFAULT NULL,
+  PRIMARY KEY (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+
+# Table, Create Table
+book, CREATE TABLE `book` (
+  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '书id',
+  `book_name` varchar(100) NOT NULL COMMENT '书名',
+  `book_counts` int(11) NOT NULL COMMENT '数量',
+  `detail` varchar(200) NOT NULL COMMENT '描述',
+  KEY `bookID` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8

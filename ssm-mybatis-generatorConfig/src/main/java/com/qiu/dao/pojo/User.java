@@ -1,11 +1,11 @@
 package com.qiu.dao.pojo;
 
-import java.io.Serializable;
-
-public class User implements Serializable {
+public class User {
     private String username;
 
     private String password;
+
+    private String pPassword;
 
     private String salt;
 
@@ -25,6 +25,14 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
+    }
+
+    public String getpPassword() {
+        return pPassword;
+    }
+
+    public void setpPassword(String pPassword) {
+        this.pPassword = pPassword == null ? null : pPassword.trim();
     }
 
     public String getSalt() {
