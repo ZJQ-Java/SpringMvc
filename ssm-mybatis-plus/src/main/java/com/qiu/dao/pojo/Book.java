@@ -17,4 +17,11 @@ public class Book {
     public Book(int id) {
         this.id = id;
     }
+
+    public Book(int id, String bookName, int bookCounts, String detail) {
+        this.id = id;
+        this.bookName = bookName;
+        this.bookCounts = bookCounts;
+        this.detail = detail;
+    }
 }
