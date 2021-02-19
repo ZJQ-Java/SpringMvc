@@ -28,7 +28,6 @@ public class TestFilterOrder implements Filter {
     }
 
     private String getParams(Map<String, String[]> parameterMap) {
-        //todo stringbuffer stringbuilder
         StringBuffer params = new StringBuffer();
         if (parameterMap != null && !parameterMap.isEmpty()) {
             params.append("\tPARAMS={");
