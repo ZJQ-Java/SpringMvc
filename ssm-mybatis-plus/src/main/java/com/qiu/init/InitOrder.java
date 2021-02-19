@@ -1,4 +1,4 @@
-//package com.qiu.init;
+package com.qiu.init;//package com.qiu.init;
 //
 //import org.apache.logging.log4j.LogManager;
 //import org.apache.logging.log4j.Logger;
