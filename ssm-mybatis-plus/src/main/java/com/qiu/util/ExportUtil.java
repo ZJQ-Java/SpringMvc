@@ -147,7 +147,8 @@ public class ExportUtil {
 
     public static Workbook writeExcel(Workbook excel, List<String> titles, List<Map<Integer, Book>> dataList) {
         if (excel == null) {
-            excel = new SXSSFWorkbook(new XSSFWorkbook());
+            /*excel = new XSSFWorkbook();*/
+            excel = new SXSSFWorkbook();
         }
         Sheet sheet = excel.createSheet();
         int rowIndex = 0;

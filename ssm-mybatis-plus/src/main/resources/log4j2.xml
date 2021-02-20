@@ -47,11 +47,11 @@
 
     <Loggers>
         <!-- 避免重复打印相同日志additivity-->
-        <Logger name="AccessLog" level="info" additivity="false">
+        <Logger name="AccessLog" level="debug" additivity="false">
             <AppenderRef ref="accessLogAsync"/>
         </Logger>
         <!--level:日志输出级别，共有8个级别，按照从低到高为：All < Trace < Debug < Info < Warn < Error < Fatal < OFF.-->
-        <Root level="info">
+        <Root level="debug">
             <AppenderRef ref="Console"/>
         </Root>
 

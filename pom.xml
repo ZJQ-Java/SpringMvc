@@ -15,7 +15,6 @@
         <module>spring-mvc-demo02</module>
         <module>spring-mvc-demo03</module>
         <module>spring-mvc-json04</module>
-        <module>spring-mvc-ssm</module>
         <module>spring-mvc-login-interceptor</module>
         <module>ssm-mybatis-plus</module>
         <module>ssm-mybatis-generatorConfig</module>

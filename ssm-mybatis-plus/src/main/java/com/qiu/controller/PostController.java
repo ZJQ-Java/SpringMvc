@@ -42,6 +42,30 @@ public class PostController {
         throw new CustomException("test exception");
     }
 
+
+    @RequestMapping("/test/path")
+    public String testPath(HttpServletRequest req) {
+        String contextPath = req.getContextPath();
+        String servletPath = req.getServletPath();
+
+        String path = req.getSession().getServletContext().getRealPath("/WEB-INF/upload/");
+        System.out.println("contextPath:" + contextPath);//
+        System.out.println("servletPath:" + servletPath); // /test/path
+        // D:\Java学习\SpringMvc\classes\artifacts\ssm_mybatis_plus_war_exploded\WEB-INF\\upload注释转义
+        System.out.println("path:" + path);
+
+        String sessionPath = req.getSession().getServletContext().getContextPath();
+        String sessionServletPath = req.getSession().getServletContext().getRealPath("");
+        String _sessionServletPath = req.getSession().getServletContext().getRealPath("/");
+        System.out.println("sessionPath:" + sessionPath);
+        //D:\Java学习\SpringMvc\classes\artifacts\ssm_mybatis_plus_war_exploded\WEB-INF\\upload注释转义
+        System.out.println(" sessionServletPath:" + sessionServletPath);
+        //D:\Java学习\SpringMvc\classes\artifacts\ssm_mybatis_plus_war_exploded\WEB-INF\\upload\   注释转义
+        System.out.println(" _sessionServletPath:" + _sessionServletPath);
+        return "success";
+
+    }
+
     public static void main(String[] args) throws IOException {
         URL url = new URL("http://www.runoob.com/post/test?language=cn#j2se");
         System.out.println("URL 为：" + url.toString());

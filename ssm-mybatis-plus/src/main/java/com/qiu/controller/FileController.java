@@ -4,13 +4,11 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.enums.CellDataTypeEnum;
 import com.alibaba.excel.exception.ExcelDataConvertException;
 import com.alibaba.excel.metadata.CellData;
-import com.alibaba.excel.read.builder.ExcelReaderBuilder;
-import com.alibaba.excel.read.builder.ExcelReaderSheetBuilder;
 import com.alibaba.fastjson.JSON;
 import com.qiu.dao.pojo.Book;
-import com.qiu.dao.pojo.UploadExcelEntity;
 import com.qiu.listen.ExcelListen;
 import com.qiu.util.ExportUtil;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -23,7 +21,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class FileController {
@@ -36,97 +36,11 @@ public class FileController {
         for (int i = 0; i < 1; i++) {
             dataBase = new HashMap<>();
             for (int j = 1; j <= 5; j++) {
-                dataBase.put(j, new Book(j, "bookName" + j, j, "detail " + j));
+                dataBase.put(j, new Book(j, "bookName" + j, j, "detail" + j));
             }
             dataList.add(dataBase);
         }
 //        System.out.println(dataList);
-    }
-
-    @RequestMapping("download/books")
-    public void CSVTest(HttpServletResponse response) throws IOException {
-        String fName = "books";
-        String mapKey = "1,2,3,4,5";
-        long startTime = System.currentTimeMillis();
-        List<String> titles = Arrays.asList("书id", "书名", "书的数量", "书的详细信息");
-        try (OutputStream os = response.getOutputStream()) {
-            ExportUtil.responseSetProperties(fName, response);
-            ExportUtil.doCSVExport1(dataList, titles, mapKey, os);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-//        Workbook workbook = ExportUtil.writeExcel(null, Arrays.asList(sTitle.split(",")), dataList);
-//        response.setCharacterEncoding("UTF-8");
-//        response.setContentType("application/vnd.ms-excel");
-//        response.addHeader("Content-Disposition", "attachment; filename=" + "test" + ".xlsx");
-//        workbook.write(response.getOutputStream());
-//        workbook.close();
-        long endTime = System.currentTimeMillis();
-        System.out.println("time:" + (endTime - startTime));
-
-    }
-
-    @RequestMapping("upload/books")
-    public String uploadBooks(MultipartFile file) throws IOException {
-        ExcelListen excelListen = new ExcelListen();
-        try {
-            ExcelReaderBuilder read = EasyExcel.read(file.getInputStream(), UploadExcelEntity.class, excelListen);
-            ExcelReaderSheetBuilder sheet = read.sheet();
-            sheet.doRead();
-        } catch (Exception e) {
-            e.printStackTrace();
-            if (e.getCause() instanceof ExcelDataConvertException) {
-                ExcelDataConvertException excelDataConvertException = (ExcelDataConvertException) e.getCause();
-                String cellMsg = "";
-                CellData cellData = excelDataConvertException.getCellData();
-                //这里有一个celldatatype的枚举值,用来判断CellData的数据类型
-                CellDataTypeEnum type = cellData.getType();
-                if (type.equals(CellDataTypeEnum.NUMBER)) {
-                    cellMsg = cellData.getNumberValue().toString();
-                } else if (type.equals(CellDataTypeEnum.STRING)) {
-                    cellMsg = cellData.getStringValue();
-                } else if (type.equals(CellDataTypeEnum.BOOLEAN)) {
-                    cellMsg = cellData.getBooleanValue().toString();
-                }
-                String errorMsg = String
-                        .format("excel表格:第%s行,第%s列,数据值为:%s,该数据值不符合要求,请检验后重新导入!<span style=\"color:red\">请检查其他的记录是否有同类型的错误!</span>",
-                                excelDataConvertException.getRowIndex() + 1, excelDataConvertException.getColumnIndex(),
-                                cellMsg);
-                System.out.println(errorMsg);
-            }
-
-        }
-        List<UploadExcelEntity> list = (List<UploadExcelEntity>) excelListen.list;
-        if (list == null || list.isEmpty()) {
-            return "error";
-        }
-        log.info("list:" + JSON.toJSONString(list));
-        return "success";
-    }
-
-
-    @RequestMapping("/test/path")
-    public String testPath(HttpServletRequest req) {
-        String contextPath = req.getContextPath();
-        String servletPath = req.getServletPath();
-
-        String path = req.getSession().getServletContext().getRealPath("/WEB-INF/upload/");
-        System.out.println("contextPath:" + contextPath);//
-        System.out.println("servletPath:" + servletPath); // /test/path
-        // D:\Java学习\SpringMvc\classes\artifacts\ssm_mybatis_plus_war_exploded\WEB-INF\\upload注释转义
-        System.out.println("path:" + path);
-
-        String sessionPath = req.getSession().getServletContext().getContextPath();
-        String sessionServletPath = req.getSession().getServletContext().getRealPath("");
-        String _sessionServletPath = req.getSession().getServletContext().getRealPath("/");
-        System.out.println("sessionPath:" + sessionPath);
-        //D:\Java学习\SpringMvc\classes\artifacts\ssm_mybatis_plus_war_exploded\WEB-INF\\upload注释转义
-        System.out.println(" sessionServletPath:" + sessionServletPath);
-        //D:\Java学习\SpringMvc\classes\artifacts\ssm_mybatis_plus_war_exploded\WEB-INF\\upload\   注释转义
-        System.out.println(" _sessionServletPath:" + _sessionServletPath);
-        return "success";
-
     }
 
     @RequestMapping("/upload/file")
@@ -153,5 +67,128 @@ public class FileController {
         // 写入文件
         file.transferTo(filePath);
         return "success";
+    }
+
+
+    @RequestMapping("/upload/books")
+    public String uploadBooks(MultipartFile file) throws IOException {
+        ExcelListen excelListen = new ExcelListen();
+        try {
+            EasyExcel.read(file.getInputStream(), Book.class, excelListen).sheet().doRead();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (e.getCause() instanceof ExcelDataConvertException) {
+                ExcelDataConvertException excelDataConvertException = (ExcelDataConvertException) e.getCause();
+                String cellMsg = "";
+                CellData cellData = excelDataConvertException.getCellData();
+                //这里有一个celldatatype的枚举值,用来判断CellData的数据类型
+                CellDataTypeEnum type = cellData.getType();
+                if (type.equals(CellDataTypeEnum.NUMBER)) {
+                    cellMsg = cellData.getNumberValue().toString();
+                } else if (type.equals(CellDataTypeEnum.STRING)) {
+                    cellMsg = cellData.getStringValue();
+                } else if (type.equals(CellDataTypeEnum.BOOLEAN)) {
+                    cellMsg = cellData.getBooleanValue().toString();
+                }
+                String errorMsg = String
+                        .format("excel表格:第%s行,第%s列,数据值为:%s,该数据值不符合要求,请检验后重新导入!<span style=\"color:red\">请检查其他的记录是否有同类型的错误!</span>",
+                                excelDataConvertException.getRowIndex() + 1, excelDataConvertException.getColumnIndex(),
+                                cellMsg);
+                log.error(errorMsg);
+            }
+
+        }
+        List<Book> list = (List<Book>) excelListen.list;
+        if (list == null || list.isEmpty()) {
+            return "error";
+        }
+        log.info("list:" + JSON.toJSONString(list));
+        return "success";
+    }
+
+    @RequestMapping("/download/books/csv")
+    public void CSVTest(HttpServletResponse response) throws IOException {
+        String fName = "books";
+        String mapKey = "1,2,3,4,5";
+        long startTime = System.currentTimeMillis();
+        List<String> titles = Arrays.asList("书id", "书名", "书的数量", "书的详细信息");
+        try (OutputStream os = response.getOutputStream()) {
+            ExportUtil.responseSetProperties(fName, response);
+            ExportUtil.doCSVExport1(dataList, titles, mapKey, os);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        long endTime = System.currentTimeMillis();
+        System.out.println("csv time:" + (endTime - startTime));
+
+    }
+
+    @RequestMapping("/download/books/excel")
+    public void excelTest(HttpServletResponse response) throws IOException {
+        long startTime = System.currentTimeMillis();
+        String title = "书id,书名,书的数量,书的详细信息";
+        Workbook workbook = ExportUtil.writeExcel(null, Arrays.asList(title.split(",")), dataList);
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/vnd.ms-excel");
+        response.addHeader("Content-Disposition", "attachment; filename=" + "test" + ".xlsx");
+        workbook.write(response.getOutputStream());
+        workbook.close();
+        long endTime = System.currentTimeMillis();
+        System.out.println("excel time:" + (endTime - startTime));
+
+    }
+
+    @RequestMapping("/download/books/easyExcel")
+    public String easyExcelTest(HttpServletResponse response) throws IOException {
+        long startTime = System.currentTimeMillis();
+        // 写法1
+        /* String fileName = TestFileUtil.getPath() + "simpleWrite" + System.currentTimeMillis() + ".xlsx";
+        // 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
+        // 如果这里想使用03 则 传入excelType参数即可
+        EasyExcel.write(fileName, UploadExcelEntity.class).sheet("模板").doWrite(dataList);*/
+
+        // 写法2
+        /*fileName = TestFileUtil.getPath() + "simpleWrite" + System.currentTimeMillis() + ".xlsx";
+        // 这里 需要指定写用哪个class去写
+        ExcelWriter excelWriter = null;
+        try {
+            excelWriter = EasyExcel.write(fileName, UploadExcelEntity.class).build();
+            WriteSheet writeSheet = EasyExcel.writerSheet("模板").build();
+            excelWriter.write(dataList, writeSheet);
+        } finally {
+            // 千万别忘记finish 会帮忙关闭流
+            if (excelWriter != null) {
+                excelWriter.finish();
+            }
+        }*/
+        // 这里注意 有同学反应使用swagger 会导致各种问题，请直接用浏览器或者用postman
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf-8");
+        // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
+        String fileName = URLEncoder.encode("测试", "UTF-8").replaceAll("\\+", "%20");
+        response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
+        List<Book> dataList = FileController.dataList.stream()
+                .map(Map::values)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+        log.debug("dataList:" + dataList);
+        EasyExcel.write(response.getOutputStream(), Book.class). sheet("模板").doWrite(dataList);
+        long endTime = System.currentTimeMillis();
+        System.out.println("excel time:" + (endTime - startTime));
+        return "success";
+
+    }
+
+    public static void main(String[] args) {
+        String fileName = "simpleWrite" + System.currentTimeMillis() + ".xlsx";
+        // 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
+        // 如果这里想使用03 则 传入excelType参数即可\
+        List<Book> dataList = FileController.dataList.stream()
+                .map(Map::values)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+        System.out.println("dataList:" + dataList);
+        EasyExcel.write(fileName, Book.class).sheet("模板").doWrite(dataList);
     }
 }
