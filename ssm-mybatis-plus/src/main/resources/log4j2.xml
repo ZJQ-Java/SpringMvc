@@ -51,7 +51,7 @@
             <AppenderRef ref="accessLogAsync"/>
         </Logger>
         <!--level:日志输出级别，共有8个级别，按照从低到高为：All < Trace < Debug < Info < Warn < Error < Fatal < OFF.-->
-        <Root level="debug">
+        <Root level="info">
             <AppenderRef ref="Console"/>
         </Root>
 

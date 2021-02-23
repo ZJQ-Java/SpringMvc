@@ -16,16 +16,16 @@
     <context:component-scan base-package="com.qiu.controller"/>
     <!-- 让Spring MVC静态资源过滤-->
     <mvc:default-servlet-handler/>
-    <!--
-    支持mvc注解驱动
+    <!--支持mvc注解驱动
         在spring中一般采用@RequestMapping注解来完成映射关系
         要想使@RequestMapping注解生效
         必须向上下文中注册DefaultAnnotationHandlerMapping
         和一个AnnotationMethodHandlerAdapter实例
         这两个实例分别在类级别和方法级别处理。
-        而annotation-driven配置帮助我们自动完成上述两个实例的注入。
-     -->
-<!--        <mvc:annotation-driven />-->
+        而annotation-driven配置帮助我们自动完成上述两个实例的注入。-->
+    <!-- 扩充了注解驱动，可以将请求参数绑定到控制参数-->
+
+    <!--        <mvc:annotation-driven />-->
 
     <mvc:annotation-driven>
         <mvc:message-converters register-defaults="true">

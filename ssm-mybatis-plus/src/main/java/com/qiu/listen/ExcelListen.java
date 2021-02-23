@@ -23,14 +23,12 @@ public class ExcelListen<T> extends AnalysisEventListener<T> {
     public ExcelListen() {
         // 这里是demo，所以随便new一个。实际使用如果到了spring,请使用下面的有参构造函数
     }
+
     /**
      * 如果使用了spring,请使用这个构造方法。每次创建Listener的时候需要把spring管理的类传进来
      *
      * @param demoDAO
      */
-    /*public ExcelListen(ExcelListen demoDAO) {
-        this.demoDAO = demoDAO;
-    }*/
 
     /**
      * 这个每一条数据解析都会来调用
@@ -41,14 +39,14 @@ public class ExcelListen<T> extends AnalysisEventListener<T> {
 
     @Override
     public void invoke(T t, AnalysisContext analysisContext) {
-        log.info("解析到一条数据:{}", JSON.toJSONString(t));
+//        log.info("解析到一条数据:{}", JSON.toJSONString(t));
         list.add(t);
         // 达到BATCH_COUNT了，需要去存储一次数据库，防止数据几万条数据在内存，容易OOM
-        if (list.size() >= BATCH_COUNT) {
-            saveData();
+//        if (list.size() >= BATCH_COUNT) {
+//            saveData();
 //            // 存储完成清理 list
 //            list.clear();
-        }
+//        }
     }
 
     /**
@@ -59,7 +57,7 @@ public class ExcelListen<T> extends AnalysisEventListener<T> {
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
         // 这里也要保存数据，确保最后遗留的数据也存储到数据库
-        saveData();
+//        saveData();
         log.info("所有数据解析完成！");
     }
 

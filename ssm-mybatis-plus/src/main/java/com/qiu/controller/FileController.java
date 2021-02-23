@@ -6,9 +6,12 @@ import com.alibaba.excel.exception.ExcelDataConvertException;
 import com.alibaba.excel.metadata.CellData;
 import com.alibaba.fastjson.JSON;
 import com.qiu.dao.pojo.Book;
+import com.qiu.dao.pojo.PushEntity;
 import com.qiu.listen.ExcelListen;
 import com.qiu.util.ExportUtil;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -20,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.*;
@@ -72,7 +76,7 @@ public class FileController {
 
     @RequestMapping("/upload/books")
     public String uploadBooks(MultipartFile file) throws IOException {
-        ExcelListen excelListen = new ExcelListen();
+        ExcelListen<Book> excelListen = new ExcelListen<>();
         try {
             EasyExcel.read(file.getInputStream(), Book.class, excelListen).sheet().doRead();
         } catch (Exception e) {
@@ -98,7 +102,7 @@ public class FileController {
             }
 
         }
-        List<Book> list = (List<Book>) excelListen.list;
+        List<Book> list = excelListen.list;
         if (list == null || list.isEmpty()) {
             return "error";
         }
@@ -173,22 +177,120 @@ public class FileController {
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
         log.debug("dataList:" + dataList);
-        EasyExcel.write(response.getOutputStream(), Book.class). sheet("模板").doWrite(dataList);
+        EasyExcel.write(response.getOutputStream(), Book.class).sheet("模板").doWrite(dataList);
         long endTime = System.currentTimeMillis();
         System.out.println("excel time:" + (endTime - startTime));
         return "success";
 
     }
 
-    public static void main(String[] args) {
-        String fileName = "simpleWrite" + System.currentTimeMillis() + ".xlsx";
+
+    @RequestMapping("/upload/excel")
+    public String uploadExcelHSSWorkBook(MultipartFile file) throws Exception {
+        long startTime = System.currentTimeMillis();
+        String fileName = file.getOriginalFilename();
+        if (fileName == null) {
+            return "error";
+        }
+        String[] nameAndExt = fileName.split("\\.");
+        if (nameAndExt.length != 2) {
+            log.error("File name resolution failed, fileName = " + fileName);
+            return "error";
+        }
+        String ext = nameAndExt[1];
+        if (!"xls".equals(ext) && !"xlsx".equals(ext)) {
+            log.error("格式错误");
+            return "error";
+        }
+        List<String> list = new ArrayList<>(readExcel(file.getInputStream(), ext));
+        if (list.isEmpty() || list.size() > 20000) {
+            log.error("文件过大");
+            return "error";
+        }
+        log.info("cost time: " + (System.currentTimeMillis() - startTime) + "毫秒");
+        log.info("normal upload：" + list.size());
+        return "success";
+    }
+
+    @RequestMapping("/upload/easyExcel")
+    public String uploadEasyExcel(MultipartFile file) throws Exception {
+        long startTime = System.currentTimeMillis();
+        String fileName = file.getOriginalFilename();
+        if (fileName == null) {
+            return "error";
+        }
+        String[] nameAndExt = fileName.split("\\.");
+        if (nameAndExt.length != 2) {
+            log.error("File name resolution failed, fileName = " + fileName);
+            return "error";
+        }
+        String ext = nameAndExt[1];
+        if (!"xls".equals(ext) && !"xlsx".equals(ext)) {
+            log.error("格式错误");
+            return "error";
+        }
+        ExcelListen<PushEntity> excelListen = new ExcelListen<PushEntity>();
+        try {
+            EasyExcel.read(file.getInputStream(), PushEntity.class, excelListen).sheet().doRead();
+        } catch (Exception e) {
+            log.error("read error e:" + e.getMessage(), e);
+        }
+        List<String> list = excelListen.list.stream().map(PushEntity::getId).collect(Collectors.toList());
+
+        EasyExcel.write("/tmp/" + fileName + System.currentTimeMillis() + ".xlsx", PushEntity.class).sheet("用户ID")
+                .doWrite(excelListen.list);
+
+        if (list.isEmpty() || list.size() > 20000) {
+            log.error("文件过大");
+            return "error";
+        }
+        log.info("cost time: " + (System.currentTimeMillis() - startTime) + "毫秒");
+
+        log.info("list：" + list.size());
+        return "success";
+    }
+
+    private List<String> readExcel(InputStream is, String pattern) throws Exception {
+        if (is == null) {
+            return null;
+        }
+        //生成Excel对象
+        Workbook excel;
+        if ("xlsx".equalsIgnoreCase(pattern)) {
+            excel = new XSSFWorkbook(is);
+        } else {
+            excel = new HSSFWorkbook(is);
+        }
+        Sheet sheet = excel.getSheetAt(0);
+
+        List<String> cusIdList = new ArrayList<>(5000);
+        for (Row row : sheet) {
+            Cell cell = row.getCell(0);
+            if (cell == null) {
+                continue;
+            }
+            cell.setCellType(CellType.STRING);
+            cusIdList.add(cell.getStringCellValue());
+        }
+        return cusIdList.stream().parallel().skip(1).filter(e -> e != null && !e.trim().isEmpty())
+                .collect(Collectors.toList());
+    }
+
+
+    public static void main(String[] args) throws IOException {
+        String fileName = "/tmp/simpleWrite" + System.currentTimeMillis() + ".xlsx";
         // 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
         // 如果这里想使用03 则 传入excelType参数即可\
-        List<Book> dataList = FileController.dataList.stream()
-                .map(Map::values)
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
-        System.out.println("dataList:" + dataList);
-        EasyExcel.write(fileName, Book.class).sheet("模板").doWrite(dataList);
+//        List<Book> dataList = FileController.dataList.stream()
+//                .map(Map::values)
+//                .flatMap(Collection::stream)
+//                .collect(Collectors.toList());
+//        System.out.println("dataList:" + dataList);
+        List<PushEntity> list = new ArrayList<>();
+        list.add(new PushEntity("124354657665423"));
+        list.add(new PushEntity("2"));
+        list.add(new PushEntity("3"));
+        list.add(new PushEntity("4"));
+        EasyExcel.write(fileName, PushEntity.class).sheet("模板").doWrite(list);
     }
 }

@@ -14,7 +14,33 @@
   <form action="${pageContext.request.contextPath}/upload/books" enctype="multipart/form-data" method="post">
     <table>
       <tr>
-        <td>请选择文件：</td>
+        <td>请选择任意格式文件：</td>
+        <td><input type="file" name="file"></td>
+      </tr>
+      <tr>
+        <td>开始上传</td>
+        <td><input type="submit" value="上传"></td>
+      </tr>
+    </table>
+  </form>
+
+  <form action="${pageContext.request.contextPath}/upload/excel" enctype="multipart/form-data" method="post">
+    <table>
+      <tr>
+        <td>请选择上传的excel文件：</td>
+        <td><input type="file" name="file"></td>
+      </tr>
+      <tr>
+        <td>开始上传</td>
+        <td><input type="submit" value="上传"></td>
+      </tr>
+    </table>
+  </form>
+
+  <form action="${pageContext.request.contextPath}/upload/easyExcel" enctype="multipart/form-data" method="post">
+    <table>
+      <tr>
+        <td>请选择上传的excel文件：easyExcel方式</td>
         <td><input type="file" name="file"></td>
       </tr>
       <tr>
