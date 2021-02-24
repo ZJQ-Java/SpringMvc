@@ -90,8 +90,6 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
         <!-- 配置登陆页面 -->
         <property name="loginUrl" value="/"/>
         <!-- 登陆成功后的一面 -->
-        <!--        <property name="successUrl" value="/jsp/success.jsp"/>-->
-        <!--        <property name="unauthorizedUrl" value="/jsp/unauthorized.jsp"/>-->
         <!-- 具体配置需要拦截哪些 URL, 以及访问对应的 URL 时使用 Shiro 的什么 Filter 进行拦截.  -->
         <property name="filterChainDefinitions">
             <value>
@@ -103,6 +101,8 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
                 /=anon
                 /toUser = roles[user]
                 /toAdmin = roles[admin]
+                <!--mysql perms: get -->
+                /book/gets = perms[get]
                 /logout = logout
                 /book/*=authc
             </value>

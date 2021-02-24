@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -279,6 +280,11 @@ public class FileController {
 
     public static void main(String[] args) throws IOException {
         String fileName = "/tmp/simpleWrite" + System.currentTimeMillis() + ".xlsx";
+        String str ="ceshi.xlsx";
+        int i = str.indexOf(".xlsx");
+        StringBuilder stringBuilder = new StringBuilder(str);
+        stringBuilder.insert(stringBuilder.indexOf(".xlsx"), "_"+LocalDateTime.now());
+        System.out.println(stringBuilder.toString()  );
         // 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
         // 如果这里想使用03 则 传入excelType参数即可\
 //        List<Book> dataList = FileController.dataList.stream()
@@ -286,11 +292,12 @@ public class FileController {
 //                .flatMap(Collection::stream)
 //                .collect(Collectors.toList());
 //        System.out.println("dataList:" + dataList);
-        List<PushEntity> list = new ArrayList<>();
-        list.add(new PushEntity("124354657665423"));
-        list.add(new PushEntity("2"));
-        list.add(new PushEntity("3"));
-        list.add(new PushEntity("4"));
-        EasyExcel.write(fileName, PushEntity.class).sheet("模板").doWrite(list);
+//        List<PushEntity> list = new ArrayList<>();
+//        list.add(new PushEntity("124354657665423"));
+//        list.add(new PushEntity("2"));
+//        list.add(new PushEntity("3"));
+//        list.add(new PushEntity("4"));
+
+//        EasyExcel.write(fileName, PushEntity.class).sheet("模板").doWrite(list);
     }
 }
