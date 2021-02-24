@@ -3,11 +3,11 @@ package com.qiu.myShiro;
 import com.qiu.controller.LoginController;
 import com.qiu.dao.pojo.User;
 import com.qiu.server.UserService;
+import com.qiu.util.MD5Util;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
-import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ShiroDbRealm extends AuthorizingRealm {
-    private static  final Logger log = LoggerFactory.getLogger(LoginController.class);
+    private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
     private             UserService userService;
@@ -53,13 +53,16 @@ public class ShiroDbRealm extends AuthorizingRealm {
             return null; // 异常处理，找不到数据
         // 设置session
         Session session = SecurityUtils.getSubject().getSession();
+        if (!ui.getPassword().equals(MD5Util.getMD5(userLogin.getPassword(), ui.getSalt()))) {
+            throw new IncorrectCredentialsException();
+        }
         session.setAttribute(ShiroDbRealm.SESSION_USER_KEY, ui);
         //当前 Realm 的 name
         String realmName = this.getName();
         //登陆的主要信息: 可以是一个实体类的对象, 但该实体类的对象一定是根据 token 的 username 查询得到的.
         //第一个参数principal 可以在授权的时候获取到
-        return new SimpleAuthenticationInfo(ui, ui.getPassword(),
-                ByteSource.Util.bytes(ui.getSalt()), realmName);
+        //第二个参数传入的是从数据库中获取到的password，然后再与token中的password进行对比，匹配上了就通过，匹配不上就报异常。
+        return new SimpleAuthenticationInfo(ui, ui.getPassword(), ByteSource.Util.bytes(ui.getSalt()), realmName);
     }
 
     private User tokenToUser(UsernamePasswordToken authcToken) {
@@ -70,7 +73,6 @@ public class ShiroDbRealm extends AuthorizingRealm {
     }
 
     public static void main(String[] args) {
-        SimpleHash md5 = new SimpleHash("MD5", "123", ByteSource.Util.bytes("123"), 2);
-        System.out.println(md5);
+        System.out.println(MD5Util.getMD5("123", "123"));
     }
 }
