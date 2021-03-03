@@ -26,8 +26,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Controller
@@ -279,7 +282,7 @@ public class FileController {
 
 
     public static void main(String[] args) throws IOException {
-        String fileName = "/tmp/simpleWrite" + System.currentTimeMillis() + ".xlsx";
+       /* String fileName = "/tmp/simpleWrite" + System.currentTimeMillis() + ".xlsx";
         String str ="ceshi.xlsx";
         int i = str.indexOf(".xlsx");
         StringBuilder stringBuilder = new StringBuilder(str);
@@ -287,17 +290,34 @@ public class FileController {
         System.out.println(stringBuilder.toString()  );
         // 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
         // 如果这里想使用03 则 传入excelType参数即可\
-//        List<Book> dataList = FileController.dataList.stream()
-//                .map(Map::values)
-//                .flatMap(Collection::stream)
-//                .collect(Collectors.toList());
-//        System.out.println("dataList:" + dataList);
-//        List<PushEntity> list = new ArrayList<>();
-//        list.add(new PushEntity("124354657665423"));
-//        list.add(new PushEntity("2"));
-//        list.add(new PushEntity("3"));
-//        list.add(new PushEntity("4"));
+        List<Book> dataList = FileController.dataList.stream()
+                .map(Map::values)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+        System.out.println("dataList:" + dataList);
+        List<PushEntity> list = new ArrayList<>();
+        list.add(new PushEntity("124354657665423"));
+        list.add(new PushEntity("2"));
+        list.add(new PushEntity("3"));
+        list.add(new PushEntity("4"));
 
-//        EasyExcel.write(fileName, PushEntity.class).sheet("模板").doWrite(list);
+        EasyExcel.write(fileName, PushEntity.class).sheet("模板").doWrite(list);*/
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm:ss");
+        LocalDateTime time = LocalDateTime.now();
+        String localTime = df.format(time);
+        LocalDateTime ldt = LocalDateTime.parse(localTime,df);
+        System.out.println("LocalDateTime转成String类型的时间："+localTime);
+        System.out.println("ldt："+ldt);
+        System.out.println(TimeUnit.DAYS.toMillis(7));
+//        File file = new File("D://tmp//");
+//        System.out.println(file.getPath());
+//        for (File listFile : file.listFiles()) {
+//            System.out.println(listFile.getAbsoluteFile() + " time:" +listFile.lastModified());
+//        }
+        int[] arr = new int[10];
+        for (Integer integer : arr) {
+            System.out.println(integer);
+        }
+
     }
 }

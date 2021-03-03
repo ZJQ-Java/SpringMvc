@@ -72,7 +72,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
         return user;
     }
 
-    public static void main(String[] args) {
-        System.out.println(MD5Util.getMD5("123", "123"));
-    }
+//    public static void main(String[] args) {
+//        System.out.println(MD5Util.getMD5("123", "123"));
+//    }
 }
